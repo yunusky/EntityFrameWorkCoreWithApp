@@ -10,35 +10,35 @@ namespace ORM_SQL_Izalasyonu
 		{
 			#region ORM'siz Yaklaşım (SQL + Kod)
 
-			//SqlConnection connection = new SqlConnection($"Server=.;Database=Northwind;Trusted_Connection=True;TrustServerCertificate=True;");
+			SqlConnection connection = new SqlConnection($"Server=.;Database=Northwind;Trusted_Connection=True;TrustServerCertificate=True;");
 
-			// connection.Open();
+			connection.Open();
 
-			//SqlCommand command = new(@"
-			//select employee.FirstName, Product.ProductName, COUNT(*) [Count] FROM Employees employee
-			//INNER JOIN Orders orders
-			//	ON employee.EmployeeID = orders.EmployeeID
-			//INNER JOIN [Order Details] orderDetail
-			//	ON orders.OrderID = orderDetail.OrderID
-			//INNER JOIN Products product
-			//	ON orderDetail.ProductID = product.ProductID
-			//GROUP By employee.FirstName, product.ProductName
-			//ORDER By Count(*) DESC
-			//", connection);
-			//SqlDataReader dr = command.ExecuteReader();
-			//while (dr.Read())
-			//{
-			//	Console.WriteLine($"{dr["FirstName"]} {dr["ProductName"]} {dr["Count"]}");
-			//}
+			SqlCommand command = new(@"
+			select employee.FirstName, Product.ProductName, COUNT(*) [Count] FROM Employees employee
+			INNER JOIN Orders orders
+				ON employee.EmployeeID = orders.EmployeeID
+			INNER JOIN [Order Details] orderDetail
+				ON orders.OrderID = orderDetail.OrderID
+			INNER JOIN Products product
+				ON orderDetail.ProductID = product.ProductID
+			GROUP By employee.FirstName, product.ProductName
+			ORDER By Count(*) DESC
+			", connection);
+			SqlDataReader dr = command.ExecuteReader();
+			while (dr.Read())
+			{
+				Console.WriteLine($"{dr["FirstName"]} {dr["ProductName"]} {dr["Count"]}");
+			}
 
-			// connection.Close();
+			connection.Close();
 
 
 			#endregion
 
 
 			#region ORM'li Yaklaşım (SQL - Kod) 
-			
+
 			NorthwindContext context = new();
 
 			#region Kod 1 
@@ -83,7 +83,9 @@ namespace ORM_SQL_Izalasyonu
 			#endregion
 
 			#endregion
+		
 			Console.WriteLine("Hello, World!");
 		}
 	}
 }
+ 
